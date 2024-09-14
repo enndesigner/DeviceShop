@@ -8,6 +8,5 @@
         public ICollection<int> SelectedCartProductIds { get; set; }
 
         public int? PromocodeId { get; set; }
-
     }
 }

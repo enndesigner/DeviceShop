@@ -2,10 +2,6 @@
 {
     public class Order
     {
-        public Order()
-        {
-            TotalPrice = (100 - Promocode.ValuePercent) * Products.Sum(p => p.Price) / 100;
-        }
         public int Id { get; set; }
         public string? OrderNumb { get; set; }
         public string Status { get; set; }

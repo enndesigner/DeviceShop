@@ -31,25 +31,23 @@ namespace DeviceShop.Application.Features
 
         public async Task<Order> CreateOrder(CreateOrderModel order)
         {
-            var customer = await _customerRepository.GetCustomerById(order.CustomerId);
             var selectedProducts = await _productRepository.GetProductByIds(order.ProductIds);
+            //redo promocode
             Promocode? promocode = null;
 
             if (order.PromocodeId.HasValue)
             {
                 promocode = await _promocodeRepository.GetPromocodeById(order.PromocodeId.Value);
             }
-
             var entity = new Order
             {
                 DateRequested = order.DateRequested,
                 PaymentMethod = order.PaymentMethod,
                 Status = order.Status,
                 CustomerId = order.CustomerId,
-                Customer = customer,
                 Products = selectedProducts,
                 Promocode = promocode,
-                TotalPrice = selectedProducts.Sum(p => p.Price),
+                TotalPrice = (100 - (promocode != null ? promocode.ValuePercent : 0)) * selectedProducts.Sum(p => p.Price) / 100,
                 PromocodeId = order.PromocodeId
             };
             return await _orderRepository.CreateOrder(entity);

@@ -1,6 +1,4 @@
-﻿using DeviceShop.Domain.Entity;
-
-namespace DeviceShop.Api.Common.Requests
+﻿namespace DeviceShop.Api.Common.Requests
 {
     public class CreateProductRequest
     {

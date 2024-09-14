@@ -2,10 +2,12 @@
 using DeviceShop.Application.Common.Interfaces;
 using DeviceShop.Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeviceShop.Api.Controllers
 {
     [ApiController]
+    [EnableRateLimiting("sliding")]
     [Route("api/testimonial")]
     public class TestimonialController : ControllerBase
     {
@@ -31,8 +33,5 @@ namespace DeviceShop.Api.Controllers
             };
             return Ok(await _testimonialManager.CreateTestimonial(model));
         }
-
-        //[HttpPost]
     }
-
 }

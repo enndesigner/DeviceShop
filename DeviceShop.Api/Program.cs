@@ -1,6 +1,7 @@
 
 using DeviceShop.Application;
 using DeviceShop.Persistance;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeviceShop.Api
 {
@@ -18,6 +19,18 @@ namespace DeviceShop.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddRateLimiter(RateLimiterOptions =>
+            {
+                RateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                RateLimiterOptions.AddSlidingWindowLimiter("sliding", options =>
+                {
+                    options.Window = TimeSpan.FromSeconds(30);
+                    options.SegmentsPerWindow = 20;
+                    options.PermitLimit = 20;
+                });
+            });
             
 
             var app = builder.Build();
@@ -33,6 +46,7 @@ namespace DeviceShop.Api
 
             app.UseAuthorization();
 
+            app.UseRateLimiter();
 
             app.MapControllers();
 

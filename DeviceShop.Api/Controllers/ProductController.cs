@@ -2,10 +2,12 @@
 using DeviceShop.Application.Common.Interfaces;
 using DeviceShop.Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeviceShop.Api.Controllers
 {
     [ApiController]
+    [EnableRateLimiting("sliding")]
     [Route("api/product")]
     public class ProductController : ControllerBase
     {

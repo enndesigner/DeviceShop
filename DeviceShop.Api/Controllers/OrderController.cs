@@ -2,10 +2,12 @@
 using DeviceShop.Application.Common.Interfaces;
 using DeviceShop.Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeviceShop.Api.Controllers
 {
     [ApiController]
+    [EnableRateLimiting("sliding")]
     [Route("api/order")]
     public class OrderController : ControllerBase
     {
@@ -35,7 +37,7 @@ namespace DeviceShop.Api.Controllers
             {
                 PaymentMethod = request.PaymentMethod,
                 ProductIds = request.SelectedCartProductIds,
-                DateRequested = DateTime.Now,
+                DateRequested = DateTime.UtcNow,
                 CustomerId = request.CustomerId,
                 PromocodeId = request.PromocodeId,
                 Status = "requested",

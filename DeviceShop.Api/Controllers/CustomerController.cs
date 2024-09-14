@@ -4,10 +4,12 @@ using DeviceShop.Application.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeviceShop.Api.Controllers
 {
     [ApiController]
+    [EnableRateLimiting("sliding")]
     [Route("api/customer")]
     public class CustomerController : ControllerBase
     {
